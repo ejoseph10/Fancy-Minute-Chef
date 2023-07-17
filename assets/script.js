@@ -49,6 +49,7 @@ $(document).ready(function () {
             }
         })
     }
+    function displayEdamamResults()
 
     function getRecipieSpoon(){
 
@@ -61,9 +62,6 @@ $(document).ready(function () {
             }
         })
     }
+    function displaySpoonResults()
 })
-//todo display images next to recipies
-//todo display edamam api
-//todo write spoon api
-//todo display spoon results
-//todo local storage get and set
+
