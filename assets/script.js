@@ -75,6 +75,7 @@ $(document).ready(function () {
     function displayMealResults() {
         var recipieResult = $("#recipie-result")
         recipieResult.empty()
+        
     }
     displayEdamamResults()
     displayMealResults()
