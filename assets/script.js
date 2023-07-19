@@ -22,6 +22,18 @@ $(document).ready(function () {
         getRecipieMeal(submitBox.val())
     });
 
+    //random meal function
+
+    // function getRandomMeal(){
+    //     fetch('URL', {
+    //        headers: {
+    //             'Accept': 'appliction/json'
+    //         }
+    //     }).then(data=> data.json())
+    // change randomText to corresponding HTML class & random Meal to corresponding html class
+    //       .then(obj => randomText.innerHTML=obj.random-meal)
+    // }
+
 // main
     //Edamam Api recipies
     function getRecipieEdamam() {
