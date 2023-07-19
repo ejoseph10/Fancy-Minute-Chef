@@ -1,39 +1,16 @@
-// const searchForm = document.querySelector('form');
-// const searchResultDiv = document.querySelector('.search-result');
-// const container = document.querySelector('.container');
-// let searchQuery = '';
+//API key and id for edamam.com 
+ var EDAMAM_ID = "a6d7f68a";
+ var EDAMAM_key = "8b4d17c343033fa42a2337d2263c8846";
 
-// searchForm.addEventListener('submit', (e) => {
-//     e.preventDefault(); 
-//     searchQuery = e.target.querySelector('input').value;
-//     console.log(searchQuery)
-//     fetchAPI();
-//     });
-
-//     async function fetchAPI (){
-//         const baseURL = 'https://api.edamam.com/api/recipes/v2?q=chicken&app_id=${EDAMAM_ID}&app_key${EDAMAM_key}';
-//         const response = await fetch(baseURL);
-//         const data = await response.json();
-//         generateHTML(data.hits);
-//         console.log(data);
-//     }
-//-----------------------------------------------------
 $(document).ready(function () {
-
-    //API key and id for edamam.com 
-    var EDAMAM_ID = "a6d7f68a";
-    var EDAMAM_key = "8b4d17c343033fa42a2337d2263c8846";
-
-
 
     //Search Box click event
     $("#search-btn").on("click", function (event) {
         event.preventDefault()
 
-        var searchBox = $("#search-input")
+        var submitBox = $("#search-input")
 
-        getRecipieEdamam(searchBox.val())
-        getRecipieMeal(searchBox.val())
+        getRecipieEdamam(submitBox.val())
     });
 
     //Randomn button click event
@@ -42,12 +19,11 @@ $(document).ready(function () {
         
         var submitBox = $("#search-input")
         
-        getRecipieMeal(searchBox.val())
+        getRecipieMeal(submitBox.val())
     });
 
-
-    //Edamam Api recipies
 // main
+    //Edamam Api recipies
     function getRecipieEdamam() {
 
         $.ajax({
@@ -59,8 +35,6 @@ $(document).ready(function () {
 
                 localStorage.setItem('apiData', stringResponse);
             }
-
-            
         })
     }
     //displays edamam results
@@ -69,14 +43,12 @@ $(document).ready(function () {
             recipieResult.empty()
     }
     //Get Meal recipies
-    function getRecipieMeal() {
-
         async function  getRecipieMealDB() {
             const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
             const recipies = await response.json();
             console.log(recipies);
           }
-        }
+        
     //displays Meal results
     function displayMealResults() {
         var recipieResult = $("#recipie-result")
