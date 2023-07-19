@@ -42,8 +42,8 @@ $(document).ready(function () {
         var recipieResult = $("#recipie-result")
             recipieResult.empty()
     }
-    //Get Meal recipies
-        async function  getRecipieMealDB() {
+    //Meal Api recipies
+        async function  getRecipieMeal() {
             const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
             const recipies = await response.json();
             console.log(recipies);
