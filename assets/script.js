@@ -36,6 +36,15 @@ $(document).ready(function () {
         getRecipieMeal(searchBox.val())
     });
 
+    //Randomn button click event
+    $("#search-btn").on("click", function (event) {
+        event.preventDefault()
+        
+        var submitBox = $("#search-input")
+        
+        getRecipieMeal(searchBox.val())
+    });
+
 
     //Edamam Api recipies
 // main
@@ -68,8 +77,6 @@ $(document).ready(function () {
             console.log(recipies);
           }
         }
-    
-    
     //displays Meal results
     function displayMealResults() {
         var recipieResult = $("#recipie-result")
