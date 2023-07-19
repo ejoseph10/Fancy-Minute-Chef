@@ -17,26 +17,44 @@
         <h1 class = "brand">Fancy Minute Chef</h1>
       
     <!--search box and input-->
-    <div class="recipe-search-box">
-      <input type ="text" class ="search-content"
-      placeholder="Enter a food" id = "search-input">
-      <button type= "button" class = "btn btn-primary" id = "search-btn">Search
-        
-      </button>
-      <div class="random-meal-generator">
-        <p>Don't know what to cook? </p>
-        <p>Use our random meal generator to pick for you!</p>
+     <div class="random-meal-generator">
+        <p>Don't know what to cook?
+        Use our random meal generator to pick for you!</p>
         <button type= "button" class = "btn btn-primary" id = "random-meal">Pick my meal!</button>
     </div>
-     <!--
-          <label for = "recipe-category">Select Recipe Category:</label>
-          <select name = "recipe-category" id ="recipe-category">
-            <option value ="Breakfast">Breakfast</option>
-            <option value ="Lunch">Lunch</option>
-            <option value ="Dinner">Dinner</option>
-            <option value ="Dessert">Dessert</option>
-            <option value ="Snack">Snack</option>
-        -->
+    <!--dropdown category type-->
+      <label for = "recipe-category">Select Recipe Category:</label>
+        <select name = "recipe-category" id ="recipe-category">
+          <option value ="Breakfast">Breakfast</option>
+          <option value ="Lunch">Lunch</option>
+          <option value ="Dinner">Dinner</option>
+          <option value ="Dessert">Dessert</option>
+          <option value ="Snack">Snack</option>
+        </select>
+    <button type= "button" class = "btn btn-primary" id = "search-category-btn">Search</button>
+    <!--dropdown cuisine type-->
+    <label for = "cuisine-type">Select Cuisine Type:</label>
+    <select name = "cuisine-type" id ="cuisine-type">
+      <option value ="American">American</option>
+      <option value ="Asian">Asian</option>
+      <option value ="British">British</option>
+      <option value ="CentralEurope">CentralEurope</option>
+      <option value ="Chinese">Chinese</option>
+      <option value ="EasternEurope">EasternEurope</option>
+      <option value ="French">French</option>
+      <option value ="Indian">Indian</option>
+      <option value ="Italian">Italian</option>
+      <option value ="Japanese">Japanese</option>
+      <option value ="Kosher">Kosher</option>
+      <option value ="Mediterranean">Mediterranean</option>
+      <option value ="Mexican">Mexican</option>
+      <option value ="MiddleEastern">MiddleEastern</option>
+      <option value ="Nordic">Nordic</option>
+      <option value ="SouthAmerican">SouthAmerican</option>
+      <option value ="SouthEastAsian">SouthEastAsian</option>
+    </select>
+<button type= "button" class = "btn btn-primary" id = "search-category-btn">Search</button>  
+
     <!--recipe result-->
     <div class = "recipe-result">
       <h2 class = "title">Your Recipe Results:</h2>
