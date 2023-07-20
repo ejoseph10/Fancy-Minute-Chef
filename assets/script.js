@@ -7,8 +7,9 @@ $(document).ready(function () {
     //Edamam button click event
     $("#search-category-btn").on("click", function (event) {
         event.preventDefault()
-
+        
         var edamamSearch = $("#search-input").val();
+        
 
         getRecipeEdamam(edamamSearch)
 
@@ -20,7 +21,10 @@ $(document).ready(function () {
         const recipes = await response.json();
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
-            if (!currentSearches.includes(searchQuery)) {
+            if(searchQuery === "" || searchQuery === null || searchQuery === undefined ) {
+                localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
+            }
+            else if (!currentSearches.includes(searchQuery)) {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches]));
             } else {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches.filter(search => search !== searchQuery)]))
