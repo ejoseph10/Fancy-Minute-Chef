@@ -71,6 +71,12 @@ $(document).ready(function () {
         displaySavedRecipes()
     }
 
+    //Delete saved recipes
+    function deleteIndividualRecipe(url) {
+        localStorage.setItem('recipes', JSON.stringify([...getSavedRecipesFromLS().filter(recipe => recipe.urlProp !== url)]));
+        displaySavedRecipes()
+    }
+
     //Gets recipes from localstorage 
     function getSavedRecipesFromLS() {
         return JSON.parse(localStorage.getItem("recipes")) || [];
@@ -88,10 +94,15 @@ $(document).ready(function () {
                     <div>${recipe.tagsProp}</div>
                     <div>${recipe.typeProp}</div>
                     <a target="_blank" href="${recipe.urlProp}">
-                    <img width="75px" src="${recipe.imageProp}" alt="recipe picture"></a>
+                    <img width="75px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
                 </div>`)
+            var recipeDeleteButtonEl = $("<button>Delete Recipe</button> ")
+            recipeDeleteButtonEl.on("click", function () {
+                deleteIndividualRecipe(recipe.urlProp)
+            })
 
             recipeSavedEl.append(savedRecipeEl)
+            savedRecipeEl.append(recipeDeleteButtonEl)
         })
     }
 
@@ -107,9 +118,9 @@ $(document).ready(function () {
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">
-                    <img src="${hit.recipe.images.SMALL.url}" alt="recipe picture"></a>
+                    <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}"></a>
                 </div>`)
-            var recipeSaveButtonEl = $("<button id='saveButton'>Save Recipe</button> ")
+            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
             recipeSaveButtonEl.on("click", function () {
                 saveIndividualRecipe(hit.recipe.label, hit.recipe.dietLabels, hit.recipe.mealType + " - " + hit.recipe.dishType, hit.recipe.url, hit.recipe.images.SMALL.url)
             })
@@ -145,9 +156,9 @@ $(document).ready(function () {
                     <h3>${meal.strMeal}</h3>
                     <div>${meal.strCategory}</div>
                     <a target="_blank" href="${meal.strSource}">
-                    <img width="200px" src="${meal.strMealThumb}" alt="recipe picture"></a> 
+                    <img width="200px" src="${meal.strMealThumb}" alt="some delicious ${meal.strMeal}"></a> 
                 </div>`)
-            var recipeSaveButtonEl = $("<button id='saveButton'>Save Recipe</button> ")
+            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
             recipeSaveButtonEl.on("click", function () {
                 saveIndividualRecipe(meal.strMeal, "", meal.strCategory, meal.strSource, meal.strMealThumb)
             })
