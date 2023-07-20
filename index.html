@@ -6,30 +6,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Fancy Minute Chef</title>
+   <!--Bulma CSS CDN-->
+   <link
+   rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
+ />
+ <!-- Font Awesome icons-->
+ <script src="https://kit.fontawesome.com/a65b451d45.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
   <header>
-    <h1 class="brand">Fancy Minute Chef</h1>
-  </header>
+    <section class="section">
+     <div class="hero is-warning"><h1 class="title is-1 has-text-centered ">Fancy Minute Chef</h1></div>    
+ </header>
 
   <main>
     <section>
       <!--MealDB search box-->
       <div class="random-meal-generator">
-        <p>Don't know what to cook?
+        <div class="block">
+          <div class="box has-background-white-ter">
+          <p class="content has-text-centered">
+            Don't know what to cook?
           Use our random meal generator to pick for you!</p>
-        <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
+        <button type="button" class="button is-info is-medium" id="random-meal">Pick my meal!</button>
       </div>
+    </div>  
+  </div>
 
       <!--Edamam search box-->
       <div>
+        <div class="edamam">
+          <div class="block">
+            <div class="box has-background-white-ter">
+            <p class="content has-text-centered">
         <p>Have something a little more specific in mind?</p>
         <label for="search-input">Search:</label>
         <input type="search" id="search-input" name="search" placeholder="Search Key Words">
-        <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
+        <button type="button" class="button is-info is-small" id="search-category-btn">Search</button>
         <div id="recent-search-container"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -42,6 +61,32 @@
     <section id="recipe-result-container">
       <h2 class="title">Your Recipe Results:</h2>
     </section>
+
+     <!--Icon and Navbar-->
+     <div class="block">
+      <nav class="nav">
+        <div class="nav-left">
+          <a href="" class="nav-item">
+            <h1 class="title is-5">Fancy Minute Chef</h1>
+          </a>
+        </div>
+
+        <div class="nav-center">
+          <a href="" class="nav-item">
+            <span class="icon is-large">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+        </div>
+        <div class="nav-right nav-menu">
+          <a href="#" class="nav-item has-text-centered-right">Back to Top</a>
+          <a href="#" class="nav-item has-text-centered-right">About Us</a>
+          <a href="#" class="nav-item has-text-centered-right">Contact</a>
+        </div>
+      </nav>
+    </div>
+    </div>
+
 
   </main>
 

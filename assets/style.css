@@ -1,2 +1,19 @@
-
-
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+header{
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(348, 100%, 61%)
+}
+main{
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
