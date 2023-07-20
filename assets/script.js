@@ -9,7 +9,6 @@ $(document).ready(function () {
         event.preventDefault()
 
         var edamamSearch = $("#search-input").val();
-        console.log(edamamSearch)
 
         getRecipeEdamam(edamamSearch)
 
@@ -19,17 +18,17 @@ $(document).ready(function () {
     async function getRecipeEdamam(searchQuery) {
         const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&beta=false&app_id=a6d7f68a&app_key=8b4d17c343033fa42a2337d2263c8846&random=true&q=${searchQuery}&imageSize=SMALL`)
         const recipes = await response.json();
-        console.log(recipes);
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
-            if (
-                !currentSearches.includes(searchQuery)
-            )
-                // TODO: keep recent search at 5 items max. 
-                //      If currentSearches length 5 or more, kick out first item in array before adding search to array
-                // TODO: add search term to front of array instead of end of array
-                // TODO: if search term already exists in localStorage, move it to front of array anyway because it is now a more recent search
-                localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
+            if (!currentSearches.includes(searchQuery)) {
+                localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches]));
+            } else {
+                localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches.filter(search => search !== searchQuery)]))
+            }
+            currentSearches = getRecentSearchesFromLS();
+            if (currentSearches.length > 8) {
+                localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 8)));
+            }
             displayRecentSearches()
             displaySearchResultsEdamam(recipes)
         }
@@ -98,7 +97,6 @@ $(document).ready(function () {
 
     //Displays edamam search results
     function displaySearchResultsEdamam(results) {
-        console.log(results)
         var resultContainerEl = $("#recipe-result-container");
         resultContainerEl.empty()
 
@@ -131,7 +129,6 @@ $(document).ready(function () {
     async function getRecipeMeal() {
         const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
         const recipeList = await response.json();
-        console.log(recipeList);
         if (recipeList) {
             displaySearchResultsMealDB(recipeList)
         }
@@ -139,7 +136,6 @@ $(document).ready(function () {
 
     //Displays MealDB recipe
     function displaySearchResultsMealDB(results) {
-        console.log(results)
         var resultContainerEl = $("#recipe-result-container");
         resultContainerEl.empty()
 
