@@ -57,7 +57,10 @@ $(document).ready(function () {
             var recipeEl = $(`
                 <div> 
                     <h3>${hit.recipe.label}</h3>
-                    <img src="${hit.recipe.images.THUMBNAIL.url}" alt="recipe picture">
+                    <a target="_blank" href="${hit.recipe.url}">
+                    <img src="${hit.recipe.images.THUMBNAIL.url}" alt="recipe picture"></a> 
+                    <div>${hit.recipe.dietLabels}</div>
+                    <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                 </div>`)
             recipeEl.on("click", function(){
                 getRecipeEdamam(search)
@@ -65,12 +68,6 @@ $(document).ready(function () {
             resultContainerEl.append(recipeEl)
         })
     }
-
-    label:
-    img:
-    url:
-    dietLabel:
-    mealDishType:
 
     //MealDB button click event
     $("#random-meal").on("click", function (event) {
