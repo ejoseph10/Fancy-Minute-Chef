@@ -1,6 +1,6 @@
 //API key and id for edamam.com 
- var EDAMAM_ID = "a6d7f68a";
- var EDAMAM_key = "8b4d17c343033fa42a2337d2263c8846";
+var EDAMAM_ID = "a6d7f68a";
+var EDAMAM_key = "8b4d17c343033fa42a2337d2263c8846";
 
 $(document).ready(function () {
 
@@ -10,9 +10,9 @@ $(document).ready(function () {
 
         var edamamSearch = $("#search-input").val();
         console.log(edamamSearch)
-        
+
         getRecipeEdamam(edamamSearch)
-        
+
     });
 
     //Edamam fetch Api recipe
@@ -21,15 +21,15 @@ $(document).ready(function () {
         const recipes = await response.json();
         console.log(recipes);
         if (recipes) {
-            var currentSearches =  getRecentSearchesFromLS(); 
+            var currentSearches = getRecentSearchesFromLS();
             if (
                 !currentSearches.includes(searchQuery)
             )
-            // TODO: keep recent search at 5 items max. 
-            //      If currentSearches length 5 or more, kick out first item in array before adding search to array
-            // TODO: add search term to front of array instead of end of array
-            // TODO: if search term already exists in localStorage, move it to front of array anyway because it is now a more recent search
-            localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
+                // TODO: keep recent search at 5 items max. 
+                //      If currentSearches length 5 or more, kick out first item in array before adding search to array
+                // TODO: add search term to front of array instead of end of array
+                // TODO: if search term already exists in localStorage, move it to front of array anyway because it is now a more recent search
+                localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
             displayRecentSearches()
             displaySearchResultsEdamam(recipes)
         }
@@ -38,11 +38,11 @@ $(document).ready(function () {
     //Displays edamam search history under searchbox
     function displayRecentSearches() {
         var recentSearchEl = $("#recent-search-container");
-        var currentSearches =  getRecentSearchesFromLS(); 
+        var currentSearches = getRecentSearchesFromLS();
         recentSearchEl.empty()
         currentSearches.forEach(search => {
             var searchHistoryEl = $(`<button>${search}</button>`)
-            searchHistoryEl.on("click", function(){
+            searchHistoryEl.on("click", function () {
                 getRecipeEdamam(search)
             })
             recentSearchEl.append(searchHistoryEl)
@@ -54,12 +54,47 @@ $(document).ready(function () {
         return JSON.parse(localStorage.getItem("recentSearches")) || [];
     }
 
-    // TODO: make a save recipe function that takes parameters: label, tags, type, url, imageUrl
-    //      save an object with the incoming parameter properties to localStorage array of saved recipes
-    //      don't save recipe if a recipe with that url already exists in the localStorage
-    
-    // TODO: make a display saved recipes function that adds div to an HTML container for saved recipes from localstorage
-    //      call the function whenever a recipe is saved, and when the page first loads
+    //Saves individual recipes
+    function saveIndividualRecipe(label, tags, type, url, imageUrl) {
+        var recipes = getSavedRecipesFromLS()
+        for (var i = 0; i < recipes.length; i++) {
+            if (url === recipes[i].urlProp) {
+                return
+            }
+        }
+        localStorage.setItem('recipes', JSON.stringify([...getSavedRecipesFromLS(), {
+            labelProp: label,
+            tagsProp: tags,
+            typeProp: type,
+            urlProp: url,
+            imageProp: imageUrl
+        }]));
+        displaySavedRecipes()
+    }
+
+    //Gets recipes from localstorage 
+    function getSavedRecipesFromLS() {
+        return JSON.parse(localStorage.getItem("recipes")) || [];
+    }
+
+    //Displays saved recipes
+    function displaySavedRecipes() {
+        var recipeSavedEl = $("#saved-recipe-container");
+        var savedRecipes = getSavedRecipesFromLS();
+        recipeSavedEl.empty()
+        savedRecipes.forEach(recipe => {
+            var savedRecipeEl = $(`
+                <div> 
+                    <h4>${recipe.labelProp}</h4>
+                    <div>${recipe.tagsProp}</div>
+                    <div>${recipe.typeProp}</div>
+                    <a target="_blank" href="${recipe.urlProp}">
+                    <img width="75px" src="${recipe.imageProp}" alt="recipe picture"></a>
+                </div>`)
+
+            recipeSavedEl.append(savedRecipeEl)
+        })
+    }
 
     //Displays edamam search results
     function displaySearchResultsEdamam(results) {
@@ -68,8 +103,6 @@ $(document).ready(function () {
         resultContainerEl.empty()
 
         results.hits.forEach(hit => {
-            // TODO: add a save button to each item
-            //      need click event that calls the save recipe function
             var recipeEl = $(`
                 <div> 
                     <h3>${hit.recipe.label}</h3>
@@ -77,9 +110,13 @@ $(document).ready(function () {
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">
                     <img src="${hit.recipe.images.SMALL.url}" alt="recipe picture"></a>
-                    <button id="saveButton">Save Recipe</button> 
                 </div>`)
+            var recipeSaveButtonEl = $("<button id='saveButton'>Save Recipe</button> ")
+            recipeSaveButtonEl.on("click", function () {
+                saveIndividualRecipe(hit.recipe.label, hit.recipe.dietLabels, hit.recipe.mealType + " - " + hit.recipe.dishType, hit.recipe.url, hit.recipe.images.SMALL.url)
+            })
             resultContainerEl.append(recipeEl)
+            resultContainerEl.append(recipeSaveButtonEl)
         })
     }
 
@@ -107,19 +144,21 @@ $(document).ready(function () {
         resultContainerEl.empty()
 
         results.meals.forEach(meal => {
-            // TODO: add a save button to each item
-            //      need click event that calls the save recipe function
             var recipeEl = $(`
                 <div> 
                     <h3>${meal.strMeal}</h3>
                     <div>${meal.strCategory}</div>
                     <a target="_blank" href="${meal.strSource}">
                     <img width="200px" src="${meal.strMealThumb}" alt="recipe picture"></a> 
-                    <button id="saveButton">Save Recipe</button>
                 </div>`)
+            var recipeSaveButtonEl = $("<button id='saveButton'>Save Recipe</button> ")
+            recipeSaveButtonEl.on("click", function () {
+                saveIndividualRecipe(meal.strMeal, "", meal.strCategory, meal.strSource, meal.strMealThumb)
+            })
             resultContainerEl.append(recipeEl)
+            resultContainerEl.append(recipeSaveButtonEl)
         })
     }
-
-    displayRecentSearches()  
+    displaySavedRecipes()
+    displayRecentSearches()
 })
