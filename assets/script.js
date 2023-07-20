@@ -10,8 +10,9 @@ $(document).ready(function () {
 
         var edamamSearch = $("#search-input").val();
         console.log(edamamSearch)
-
+        
         getRecipeEdamam(edamamSearch)
+        
     });
 
     //Edamam Api recipe
@@ -20,13 +21,30 @@ $(document).ready(function () {
         const recipes = await response.json();
         console.log(recipes);
         if (recipes) {
-            var currentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+            var currentSearches =  getRecentSearchesFromLS(); 
             if (
                 !currentSearches.includes(searchQuery)
             )
             localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
-        // TODO: add to localstorage. Decide a standard format to store in that works for both APIs
+            displayRecentSearches()
         }
+    }
+
+    function displayRecentSearches() {
+        var recentSearchEl = $("#recent-search-container");
+        var currentSearches =  getRecentSearchesFromLS(); 
+        recentSearchEl.empty()
+        currentSearches.forEach(search => {
+            var searchHistoryEl = $(`<button>${search}</button>`)
+            searchHistoryEl.on("click", function(){
+                getRecipeEdamam(search)
+            })
+            recentSearchEl.append(searchHistoryEl)
+        })
+    }
+
+    function getRecentSearchesFromLS() {
+        return JSON.parse(localStorage.getItem("recentSearches")) || [];
     }
 
     //MealDB button click event
@@ -56,6 +74,6 @@ $(document).ready(function () {
         dbResult.empty()
     
     } 
-
+    displayRecentSearches()
     displayResults()
 })
