@@ -25,6 +25,10 @@ $(document).ready(function () {
             if (
                 !currentSearches.includes(searchQuery)
             )
+            // TODO: keep recent search at 5 items max. 
+            //      If currentSearches length 5 or more, kick out first item in array before adding search to array
+            // TODO: add search term to front of array instead of end of array
+            // TODO: if search term already exists in localStorage, move it to front of array anyway because it is now a more recent search
             localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
             displayRecentSearches()
             displaySearchResultsEdamam(recipes)
@@ -50,6 +54,13 @@ $(document).ready(function () {
         return JSON.parse(localStorage.getItem("recentSearches")) || [];
     }
 
+    // TODO: make a save recipe function that takes parameters: label, tags, type, url, imageUrl
+    //      save an object with the incoming parameter properties to localStorage array of saved recipes
+    //      don't save recipe if a recipe with that url already exists in the localStorage
+    
+    // TODO: make a display saved recipes function that adds div to an HTML container for saved recipes from localstorage
+    //      call the function whenever a recipe is saved, and when the page first loads
+
     //Displays edamam search results
     function displaySearchResultsEdamam(results) {
         console.log(results)
@@ -57,6 +68,8 @@ $(document).ready(function () {
         resultContainerEl.empty()
 
         results.hits.forEach(hit => {
+            // TODO: add a save button to each item
+            //      need click event that calls the save recipe function
             var recipeEl = $(`
                 <div> 
                     <h3>${hit.recipe.label}</h3>
@@ -93,6 +106,8 @@ $(document).ready(function () {
         resultContainerEl.empty()
 
         results.meals.forEach(meal => {
+            // TODO: add a save button to each item
+            //      need click event that calls the save recipe function
             var recipeEl = $(`
                 <div> 
                     <h3>${meal.strMeal}</h3>
