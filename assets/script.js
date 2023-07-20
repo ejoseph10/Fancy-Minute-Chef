@@ -76,7 +76,8 @@ $(document).ready(function () {
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">
-                    <img src="${hit.recipe.images.SMALL.url}" alt="recipe picture"></a> 
+                    <img src="${hit.recipe.images.SMALL.url}" alt="recipe picture"></a>
+                    <button id="saveButton">Save Recipe</button> 
                 </div>`)
             resultContainerEl.append(recipeEl)
         })
@@ -114,6 +115,7 @@ $(document).ready(function () {
                     <div>${meal.strCategory}</div>
                     <a target="_blank" href="${meal.strSource}">
                     <img width="200px" src="${meal.strMealThumb}" alt="recipe picture"></a> 
+                    <button id="saveButton">Save Recipe</button>
                 </div>`)
             resultContainerEl.append(recipeEl)
         })
