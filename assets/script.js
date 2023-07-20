@@ -82,10 +82,8 @@ $(document).ready(function () {
         const recipeList = await response.json();
         console.log(recipeList);
         if (recipeList) {
-            localStorage.setItem('apiData', JSON.stringify(recipeList));
             displaySearchResultsMealDB(recipeList)
         }
-        // TODO: add to localstorage. Decide a standard format to store in that works for both APIs
     }
 
     //Displays MealDB recipe
