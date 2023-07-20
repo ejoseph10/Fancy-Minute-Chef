@@ -27,6 +27,7 @@ $(document).ready(function () {
             )
             localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
             displayRecentSearches()
+            displaySearchResultsEdamam(recipes)
         }
     }
 
@@ -47,6 +48,30 @@ $(document).ready(function () {
         return JSON.parse(localStorage.getItem("recentSearches")) || [];
     }
 
+    function displaySearchResultsEdamam(results) {
+        console.log(results)
+        var resultContainerEl = $("#recipe-result-container");
+        resultContainerEl.empty()
+
+        results.hits.forEach(hit => {
+            var recipeEl = $(`
+                <div> 
+                    <h3>${hit.recipe.label}</h3>
+                    <img src="${hit.recipe.images.THUMBNAIL.url}" alt="recipe picture">
+                </div>`)
+            recipeEl.on("click", function(){
+                getRecipeEdamam(search)
+            })
+            resultContainerEl.append(recipeEl)
+        })
+    }
+
+    label:
+    img:
+    url:
+    dietLabel:
+    mealDishType:
+
     //MealDB button click event
     $("#random-meal").on("click", function (event) {
         event.preventDefault()
@@ -65,15 +90,5 @@ $(document).ready(function () {
         // TODO: add to localstorage. Decide a standard format to store in that works for both APIs
     }
 
-    
-    // TODO: make a display function 
-    function displayResults() {
-    var edResult = $("#recipe-result")
-    var dbResult = $("#recipe-result")
-        edResult.empty()
-        dbResult.empty()
-    
-    } 
-    displayRecentSearches()
-    displayResults()
+    displayRecentSearches()  
 })
