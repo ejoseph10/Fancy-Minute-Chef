@@ -4,72 +4,105 @@
 
 $(document).ready(function () {
 
-    $("#search-category-btn").on("click", function(event) {
+    //Edamam button click event
+    $("#search-category-btn").on("click", function (event) {
         event.preventDefault()
 
-        var cuisineDropdownElValue = $("#cuisine-drop-down").val();
-        console.log(cuisineDropdownElValue)
-        var mealDropdownElValue = $("#meal-drop-down").val();
-        console.log(mealDropdownElValue)
+        var edamamSearch = $("#search-input").val();
+        console.log(edamamSearch)
         
-        var apiUrl = 'https://api.edamam.com/api/recipes/v2?type=public&beta=false&app_id=a6d7f68a&app_key=8b4d17c343033fa42a2337d2263c8846'
+        getRecipeEdamam(edamamSearch)
         
-        if (cuisineDropdownElValue !== "all") {
-          apiUrl = apiUrl + `&cuisineType=${cuisineDropdownElValue}`;
-        }
-        if (mealDropdownElValue !== "all") {
-          apiUrl = apiUrl + `&mealType=${mealDropdownElValue}`;
-        }
-       
-        getRecipieEdamam(apiUrl)
-      });
-
-      async function getRecipieEdamam(url){
-        console.log(url)
-        const response = await fetch(url)
-        const recipies = await response.json();
-        console.log(recipies);
-    }
-
-    //Randomn button click event
-    $("#search-btn").on("click", function (event) {
-        event.preventDefault()
-        
-        var submitBox = $("#search-input")
-        
-        getRecipieMeal(submitBox.val())
     });
 
-    //random meal function
-
-    // function getRandomMeal(){
-    //     fetch('URL', {
-    //        headers: {
-    //             'Accept': 'appliction/json'
-    //         }
-    //     }).then(data=> data.json())
-    // change randomText to corresponding HTML class & random Meal to corresponding html class
-    //       .then(obj => randomText.innerHTML=obj.random-meal)
-    // }
-
-// main
-    //displays edamam results
-    function displayEdamamResults() {
-        var recipieResult = $("#recipie-result")
-            recipieResult.empty()
+    //Edamam fetch Api recipe
+    async function getRecipeEdamam(searchQuery) {
+        const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&beta=false&app_id=a6d7f68a&app_key=8b4d17c343033fa42a2337d2263c8846&random=true&q=${searchQuery}&imageSize=SMALL`)
+        const recipes = await response.json();
+        console.log(recipes);
+        if (recipes) {
+            var currentSearches =  getRecentSearchesFromLS(); 
+            if (
+                !currentSearches.includes(searchQuery)
+            )
+            localStorage.setItem('recentSearches', JSON.stringify([...currentSearches, searchQuery]));
+            displayRecentSearches()
+            displaySearchResultsEdamam(recipes)
+        }
     }
-    //Meal Api recipies
-        async function  getRecipieMeal() {
-            const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
-            const recipies = await response.json();
-            console.log(recipies);
-          }
-        
-    //displays Meal results
-    function displayMealResults() {
-        var recipieResult = $("#recipie-result")
-            recipieResult.empty()
+
+    //Displays edamam search history under searchbox
+    function displayRecentSearches() {
+        var recentSearchEl = $("#recent-search-container");
+        var currentSearches =  getRecentSearchesFromLS(); 
+        recentSearchEl.empty()
+        currentSearches.forEach(search => {
+            var searchHistoryEl = $(`<button>${search}</button>`)
+            searchHistoryEl.on("click", function(){
+                getRecipeEdamam(search)
+            })
+            recentSearchEl.append(searchHistoryEl)
+        })
     }
-    displayEdamamResults()
-    displayMealResults()
+
+    //Gets edamam data from localstorage 
+    function getRecentSearchesFromLS() {
+        return JSON.parse(localStorage.getItem("recentSearches")) || [];
+    }
+
+    //Displays edamam search results
+    function displaySearchResultsEdamam(results) {
+        console.log(results)
+        var resultContainerEl = $("#recipe-result-container");
+        resultContainerEl.empty()
+
+        results.hits.forEach(hit => {
+            var recipeEl = $(`
+                <div> 
+                    <h3>${hit.recipe.label}</h3>
+                    <div>${hit.recipe.dietLabels}</div>
+                    <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
+                    <a target="_blank" href="${hit.recipe.url}">
+                    <img src="${hit.recipe.images.SMALL.url}" alt="recipe picture"></a> 
+                </div>`)
+            resultContainerEl.append(recipeEl)
+        })
+    }
+
+    //MealDB button click event
+    $("#random-meal").on("click", function (event) {
+        event.preventDefault()
+
+        getRecipeMeal()
+    });
+
+    //Meal fetch Api recipes
+    async function getRecipeMeal() {
+        const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+        const recipeList = await response.json();
+        console.log(recipeList);
+        if (recipeList) {
+            displaySearchResultsMealDB(recipeList)
+        }
+    }
+
+    //Displays MealDB recipe
+    function displaySearchResultsMealDB(results) {
+        console.log(results)
+        var resultContainerEl = $("#recipe-result-container");
+        resultContainerEl.empty()
+
+        results.meals.forEach(meal => {
+            var recipeEl = $(`
+                <div> 
+                    <h3>${meal.strMeal}</h3>
+                    <div>${meal.strCategory}</div>
+                    <a target="_blank" href="${meal.strSource}">
+                    <img width="200px" src="${meal.strMealThumb}" alt="recipe picture"></a> 
+                </div>`)
+            resultContainerEl.append(recipeEl)
+        })
+    }
+
+    displayRecentSearches()  
 })

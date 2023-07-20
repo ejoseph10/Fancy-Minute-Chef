@@ -1,99 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fancy Minute Chef</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-    crossorigin="anonymous"/>
-    <link rel="stylesheet" href="assets/style.css">
-  </head>
 
-  <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fancy Minute Chef</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+  <header>
+    <h1 class="brand">Fancy Minute Chef</h1>
+  </header>
+
+  <main>
     <section>
-      <div class="container">
-        <h1 class = "brand">Fancy Minute Chef</h1>
-      
-    <!--search box and input-->
-     <div class="random-meal-generator">
+      <!--MealDB search box-->
+      <div class="random-meal-generator">
         <p>Don't know what to cook?
-        Use our random meal generator to pick for you!</p>
-        <button type= "button" class = "btn btn-primary" id = "random-meal">Pick my meal!</button>
-    </div>
-    <!--dropdown category type-->
-      <label for = "recipe-category">Select Recipe Category:</label>
-        <select name = "recipe-category" id ="meal-drop-down">
-          <option value ="all">All</option>
-          <option value ="Breakfast">Breakfast</option>
-          <option value ="Lunch">Lunch</option>
-          <option value ="Dinner">Dinner</option>
-          <option value ="Dessert">Dessert</option>
-          <option value ="Snack">Snack</option>
-        </select>
-    
-    <!--dropdown cuisine type-->
-    <label for = "cuisine-type">Select Cuisine Type:</label>
-    <select name = "cuisine-type" id ="cuisine-drop-down">
-      <option value ="all">All</option>
-      <option value ="American">American</option>
-      <option value ="Asian">Asian</option>
-      <option value ="British">British</option>
-      <option value ="CentralEurope">Central Europe</option>
-      <option value ="Chinese">Chinese</option>
-      <option value ="EasternEurope">Eastern Europe</option>
-      <option value ="French">French</option>
-      <option value ="Indian">Indian</option>
-      <option value ="Italian">Italian</option>
-      <option value ="Japanese">Japanese</option>
-      <option value ="Kosher">Kosher</option>
-      <option value ="Mediterranean">Mediterranean</option>
-      <option value ="Mexican">Mexican</option>
-      <option value ="MiddleEastern">Middle Eastern</option>
-      <option value ="Nordic">Nordic</option>
-      <option value ="SouthAmerican">South American</option>
-      <option value ="SouthEastAsian">South East Asian</option>
-    </select>
-<button type= "button" class = "btn btn-primary" id = "search-category-btn">Search</button>  
+          Use our random meal generator to pick for you!</p>
+        <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
+      </div>
+
+      <!--Edamam search box-->
+      <div>
+        <p>Have something a little more specific in mind?</p>
+        <label for="search">Search:</label>
+        <input type="search" id="search-input" name="search" placeholder="Search Key Words">
+        <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
+        <div id="recent-search-container"></div>
+      </div>
+    </section>
 
     <!--recipe result-->
-    <div class = "recipe-result">
-      <h2 class = "title">Your Recipe Results:</h2>
-      
-      <!--random result-->
-      <div class = "random-recipe">
-        <div class ="recipe-img">
-          <img src=" " alt = "food">
-        </div>    
-      <div class="random-recipe">
-        <h3>Insert Recipe Name here </h3>
-        <a href="#" class="random-btn">Get Recipe</a>
-      </div>
-      <!--cuisine type result-->
-      <div class = "cuisine-result">
-        <div class ="recipe-img">
-          <img src=" " alt = "food">
-        </div>    
-      <div class="cuisine-result">
-        <h3>Insert Recipe Name here </h3>
-        <a href="#" class="random-btn">Get Recipe</a>
-      </div>
-     
-    <section>
+    <section id="recipe-result-container">
+      <h2 class="title">Your Recipe Results:</h2>
+    </section>
 
+  </main>
 
+  <!--JS, Jquery-->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="assets/script.js"></script>
 
-    </div>
+</body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-    crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" 
-    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
-    crossorigin="anonymous"></script>
-	<script src="assets/script.js"></script>
-
-  </body>
-  
 </html>
