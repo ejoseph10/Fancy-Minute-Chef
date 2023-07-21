@@ -117,8 +117,8 @@ $(document).ready(function () {
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12 card h-100"> 
-                    <div class="card-header"><h3>${hit.recipe.label}</h3></div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card"> 
+                    <div class="card-header">${hit.recipe.label}</div>
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">

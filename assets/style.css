@@ -9,14 +9,14 @@ header{
     align-items: center;
     background-color: #FFDE59
 }
-/* main{
+main{
     padding: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-} */
+}
 img{
     border-radius: 10px;
     margin:0.5rem;
