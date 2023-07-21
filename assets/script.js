@@ -117,19 +117,19 @@ $(document).ready(function () {
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
-                <div class="col-xl col-lg col-md col-sm-3 col-xs-3 col-3 card"> 
-                    <h3>${hit.recipe.label}</h3>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 col-12 card h-100"> 
+                    <div class="card-header"><h3>${hit.recipe.label}</h3></div>
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">
                     <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}"></a>
                 </div>`)
-            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
-            recipeSaveButtonEl.on("click", function () {
+            var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
+            $(recipeSaveButtonEl).on("click", function () {
                 saveIndividualRecipe(hit.recipe.label, hit.recipe.dietLabels, hit.recipe.mealType + " - " + hit.recipe.dishType, hit.recipe.url, hit.recipe.images.SMALL.url)
             })
             resultContainerEl.append(recipeEl)
-            resultContainerEl.append(recipeSaveButtonEl)
+            recipeEl.append(recipeSaveButtonEl)
         })
     }
 
