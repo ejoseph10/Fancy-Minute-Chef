@@ -7,7 +7,7 @@ header{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: hsl(348, 100%, 61%)
+    background-color: #FFDE59
 }
 main{
     padding: 0px;
