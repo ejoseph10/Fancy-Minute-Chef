@@ -93,7 +93,7 @@ $(document).ready(function () {
         recipeSavedEl.empty()
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
-                <div> 
+                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card"> 
                     <h4>${recipe.labelProp}</h4>
                     <div>${recipe.tagsProp}</div>
                     <div>${recipe.typeProp}</div>
@@ -117,7 +117,7 @@ $(document).ready(function () {
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
-                <div> 
+                <div class="col-xl col-lg col-md col-sm-3 col-xs-3 col-3 card"> 
                     <h3>${hit.recipe.label}</h3>
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
