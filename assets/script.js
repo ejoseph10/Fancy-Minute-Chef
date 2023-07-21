@@ -93,7 +93,7 @@ $(document).ready(function () {
         recipeSavedEl.empty()
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
-                <div> 
+                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card"> 
                     <h4>${recipe.labelProp}</h4>
                     <div>${recipe.tagsProp}</div>
                     <div>${recipe.typeProp}</div>
@@ -117,19 +117,19 @@ $(document).ready(function () {
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
-                <div> 
-                    <h3>${hit.recipe.label}</h3>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card"> 
+                    <div class="card-header">${hit.recipe.label}</div>
                     <div>${hit.recipe.dietLabels}</div>
                     <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
                     <a target="_blank" href="${hit.recipe.url}">
                     <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}"></a>
                 </div>`)
-            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
-            recipeSaveButtonEl.on("click", function () {
+            var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
+            $(recipeSaveButtonEl).on("click", function () {
                 saveIndividualRecipe(hit.recipe.label, hit.recipe.dietLabels, hit.recipe.mealType + " - " + hit.recipe.dishType, hit.recipe.url, hit.recipe.images.SMALL.url)
             })
             resultContainerEl.append(recipeEl)
-            resultContainerEl.append(recipeSaveButtonEl)
+            recipeEl.append(recipeSaveButtonEl)
         })
     }
 
