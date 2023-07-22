@@ -103,14 +103,16 @@ $(document).ready(function () {
         }
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
-                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card"> 
-                    <h4>${recipe.labelProp}</h4>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12 col-xl-12 col-12 card"> 
+                <img class="card-img-top" width="75px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                <div class="card-body">
+                    <h5 class="card-title">${recipe.labelProp}</h5>
                     <div>${recipe.tagsProp}</div>
                     <div>${recipe.typeProp}</div>
                     <a target="_blank" href="${recipe.urlProp}">
-                    <img width="75px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                  </div>  
                 </div>`)
-            var recipeDeleteButtonEl = $("<button>Delete Recipe</button> ")
+            var recipeDeleteButtonEl = $("<button class='btn btn-secondary'>Delete Recipe</button> ")
             recipeDeleteButtonEl.on("click", function () {
                 deleteIndividualRecipe(recipe.urlProp)
             })
@@ -130,12 +132,17 @@ $(document).ready(function () {
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card"> 
-                    <div class="card-header">${hit.recipe.label}</div>
-                    <div>${hit.recipe.dietLabels}</div>
-                    <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card">
+                    <div class="card-header">
+                        <h3 class="card-title">${hit.recipe.label}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class"card-subtitle text-body-secondary">${hit.recipe.dietLabels}</div>
+                        <div class"card-subtitle text-body-secondary">${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
+                    </div>
                     <a target="_blank" href="${hit.recipe.url}">
-                    <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}"></a>
+                        <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}">
+                    </a>
                 </div>`)
             var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
             $(recipeSaveButtonEl).on("click", function () {
