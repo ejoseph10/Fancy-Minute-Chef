@@ -20,24 +20,24 @@
   <div class="container-fluid">
     <main>
       <section class="row">
+        <!--Edamam search box-->
+        <div class="col-6 text-center">
+          <p>Lets cook something you're craving!</p>
+          <label for="search-input">Search:</label>
+          <input type="search" id="search-input" name="search" placeholder="Search Key Words">
+          <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
+          <div id="recent-search-container" class="btn-group"></div>
+        </div>
+
         <!--MealDB search box-->
-        <div class="col text-center">
+        <div class="col-6 text-center">
           <div class="random-meal-generator">
-            <p>Don't know what to cook?
-              Use our random meal generator to pick for you!</p>
+            <p>Not sure?
+              Let us suggest something using our random meal generator to pick for you!</p>
             <!-- <img src="assets/images/randomrecipe.png" style="max-width:20%;" class="rounded mx-auto d-block"
                 alt="spinner random meal"> -->
             <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
           </div>
-        </div>
-
-        <!--Edamam search box-->
-        <div class="col text-center">
-          <p>Have something a little more specific in mind?</p>
-          <label for="search-input">Search:</label>
-          <input type="search" id="search-input" name="search" placeholder="Search Key Words">
-          <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
-          <div id="recent-search-container"></div>
         </div>
       </section>
 

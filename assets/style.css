@@ -16,3 +16,11 @@ img{
     overflow: hidden;
     box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.7);
 }
+.btn-light-grey {
+    background-color: #e0e0e0; /* Light grey color */
+    color: #333;
+}
+.btn-light-grey:hover {
+    background-color: #c0c0c0; /* Light grey color */
+    color: #333;
+}

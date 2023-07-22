@@ -21,8 +21,9 @@ $(document).ready(function () {
         const recipes = await response.json();
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
-            if(searchQuery === "" || searchQuery === null || searchQuery === undefined ) {
-                localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
+            if(searchQuery === "" || searchQuery === null || searchQuery === undefined) {
+                if (!currentSearches.includes("Random"))
+                    localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
             }
             else if (!currentSearches.includes(searchQuery)) {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches]));
@@ -30,8 +31,8 @@ $(document).ready(function () {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches.filter(search => search !== searchQuery)]))
             }
             currentSearches = getRecentSearchesFromLS();
-            if (currentSearches.length > 8) {
-                localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 8)));
+            if (currentSearches.length > 5) {
+                localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 5)));
             }
             displayRecentSearches()
             displaySearchResultsEdamam(recipes)
@@ -44,7 +45,7 @@ $(document).ready(function () {
         var currentSearches = getRecentSearchesFromLS();
         recentSearchEl.empty()
         currentSearches.forEach(search => {
-            var searchHistoryEl = $(`<button>${search}</button>`)
+            var searchHistoryEl = $(`<button class='btn btn-light-grey'>${search}</button>`)
             searchHistoryEl.on("click", function () {
                 getRecipeEdamam(search)
             })
