@@ -24,3 +24,11 @@ img{
     background-color: #c0c0c0; /* Light grey color */
     color: #333;
 }
+.btn-light-red{
+    background-color: #FF5758;
+    color:white;
+}
+.btn-light-red:hover{
+    background-color: #E04D4D;
+    color:white;
+}
