@@ -7,12 +7,15 @@ $(document).ready(function () {
     //Edamam button click event
     $("#search-category-btn").on("click", function (event) {
         event.preventDefault()
-        
         var edamamSearch = $("#search-input").val();
-        
-
         getRecipeEdamam(edamamSearch)
-
+    });
+    $('#search-input').on('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            var edamamSearch = $(this).val();
+            getRecipeEdamam(edamamSearch)
+        }
     });
 
     //Edamam fetch Api recipe
@@ -21,8 +24,9 @@ $(document).ready(function () {
         const recipes = await response.json();
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
-            if(searchQuery === "" || searchQuery === null || searchQuery === undefined ) {
-                localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
+            if (searchQuery === "" || searchQuery === null || searchQuery === undefined) {
+                if (!currentSearches.includes("Random"))
+                    localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
             }
             else if (!currentSearches.includes(searchQuery)) {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches]));
@@ -30,8 +34,8 @@ $(document).ready(function () {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches.filter(search => search !== searchQuery)]))
             }
             currentSearches = getRecentSearchesFromLS();
-            if (currentSearches.length > 8) {
-                localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 8)));
+            if (currentSearches.length > 5) {
+                localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 5)));
             }
             displayRecentSearches()
             displaySearchResultsEdamam(recipes)
@@ -44,7 +48,7 @@ $(document).ready(function () {
         var currentSearches = getRecentSearchesFromLS();
         recentSearchEl.empty()
         currentSearches.forEach(search => {
-            var searchHistoryEl = $(`<button>${search}</button>`)
+            var searchHistoryEl = $(`<button class='btn btn-light-grey'>${search}</button>`)
             searchHistoryEl.on("click", function () {
                 getRecipeEdamam(search)
             })
@@ -90,17 +94,25 @@ $(document).ready(function () {
     function displaySavedRecipes() {
         var recipeSavedEl = $("#saved-recipe-container");
         var savedRecipes = getSavedRecipesFromLS();
+        var savedRecipeHeaderEl = $("#saved-recipes-title")
         recipeSavedEl.empty()
+        if (savedRecipes.length > 0) {
+            savedRecipeHeaderEl.show()
+        } else {
+            savedRecipeHeaderEl.hide()
+        }
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
-                <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card"> 
-                    <h4>${recipe.labelProp}</h4>
-                    <div>${recipe.tagsProp}</div>
-                    <div>${recipe.typeProp}</div>
-                    <a target="_blank" href="${recipe.urlProp}">
-                    <img width="75px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12 col-xl-12 col-12 card"> 
+                    <div class="card-header">
+                        <h6 class="card-title">${recipe.labelProp}</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <a target="_blank" href="${recipe.urlProp}">
+                        <img width="100px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                    </div>  
                 </div>`)
-            var recipeDeleteButtonEl = $("<button>Delete Recipe</button> ")
+            var recipeDeleteButtonEl = $("<button class='btn btn-secondary'>Delete Recipe</button> ")
             recipeDeleteButtonEl.on("click", function () {
                 deleteIndividualRecipe(recipe.urlProp)
             })
@@ -113,16 +125,35 @@ $(document).ready(function () {
     //Displays edamam search results
     function displaySearchResultsEdamam(results) {
         var resultContainerEl = $("#recipe-result-container");
+        var searchResultHeaderEl = $("#results-title")
         resultContainerEl.empty()
 
+        searchResultHeaderEl.show()
+
         results.hits.forEach(hit => {
+            //resizes card header font to take less space if too long
+            var size = hit.recipe.label.length;
+            if (size >= 50)  {
+                size = 6;
+            } else if (size >= 40)  {
+                size = 5;
+            } else if (size >=30) {
+                size = 4;
+            } else {
+                size = 4;
+            }
             var recipeEl = $(`
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card"> 
-                    <div class="card-header">${hit.recipe.label}</div>
-                    <div>${hit.recipe.dietLabels}</div>
-                    <div>${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card">
+                    <div class="card-header">
+                        <h${size} class="card-title">${hit.recipe.label}</h${size}>
+                    </div>
+                    <div class="card-body">
+                        <div class"card-subtitle text-body-secondary">${hit.recipe.dietLabels}</div>
+                        <div class"card-subtitle text-body-secondary">${hit.recipe.mealType} - ${hit.recipe.dishType}</div>
+                    </div>
                     <a target="_blank" href="${hit.recipe.url}">
-                    <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}"></a>
+                        <img src="${hit.recipe.images.SMALL.url}" alt="some delicious ${hit.recipe.label}">
+                    </a>
                 </div>`)
             var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
             $(recipeSaveButtonEl).on("click", function () {
@@ -152,22 +183,31 @@ $(document).ready(function () {
     //Displays MealDB recipe
     function displaySearchResultsMealDB(results) {
         var resultContainerEl = $("#recipe-result-container");
+        var searchResultHeaderEl = $("#results-title")
+
         resultContainerEl.empty()
+
+        searchResultHeaderEl.show()
 
         results.meals.forEach(meal => {
             var recipeEl = $(`
-                <div> 
-                    <h3>${meal.strMeal}</h3>
-                    <div>${meal.strCategory}</div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card mx-auto">
+                    <div class="card-header">
+                        <h3 class="card-title">${meal.strMeal}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class"card-subtitle text-body-secondary">${meal.strCategory}</div>
+                    </div>
                     <a target="_blank" href="${meal.strSource}">
-                    <img width="200px" src="${meal.strMealThumb}" alt="some delicious ${meal.strMeal}"></a> 
+                        <img width="200px" src="${meal.strMealThumb}" alt="some delicious ${meal.strMeal}">
+                    </a>
                 </div>`)
-            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
+            var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
             recipeSaveButtonEl.on("click", function () {
                 saveIndividualRecipe(meal.strMeal, "", meal.strCategory, meal.strSource, meal.strMealThumb)
             })
             resultContainerEl.append(recipeEl)
-            resultContainerEl.append(recipeSaveButtonEl)
+            recipeEl.append(recipeSaveButtonEl)
         })
     }
     displaySavedRecipes()
