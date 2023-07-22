@@ -13,56 +13,48 @@
 </head>
 
 <body>
-  <header>
-    <div>
+  <header class="text-center">
       <img src="assets/images/fancylogo.png" alt="hand holding a timer with a chef hat">
-    </div>
   </header>
 
   <div class="container-fluid">
-    <main class="col">
-      <div class="row">
-        <section>
-          <!--MealDB search box-->
-          <div class="col text-center">
-            <div class="random-meal-generator">
-              <p>Don't know what to cook?
-                Use our random meal generator to pick for you!</p>
-              <img src="assets/images/randomrecipe.png" style="max-width:20%;" class="rounded mx-auto d-block"
-                alt="spinner random meal">
-              <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
-            </div>
-          </div>
-
-          <!--Edamam search box-->
-          <div class="col text-center">
-            <p>Have something a little more specific in mind?</p>
-            <label for="search-input">Search:</label>
-            <input type="search" id="search-input" name="search" placeholder="Search Key Words">
-            <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
-            <div id="recent-search-container"></div>
-          </div>
-        </section>
-
-        <!--Displays all saved recipes-->
-        <aside>
-          <div id="saved-recipe-container"></div>
-        </aside>
-
-        <!--recipe result-->
-        <div class="row">
-          <div class="col">
-            <div class="row">
-              <div class="col-12 text-center">
-                <h2 class="title">Your Recipe Results:</h2>
-              </div>
-              <div class="col-12 text-center">
-                <div id="recipe-result-container" class="row d-flex flex-row align-items-stretch"></div>
-              </div>
-            </div>
+    <main>
+      <section class="row">
+        <!--MealDB search box-->
+        <div class="col text-center">
+          <div class="random-meal-generator">
+            <p>Don't know what to cook?
+              Use our random meal generator to pick for you!</p>
+            <!-- <img src="assets/images/randomrecipe.png" style="max-width:20%;" class="rounded mx-auto d-block"
+                alt="spinner random meal"> -->
+            <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
           </div>
         </div>
-      </div>
+
+        <!--Edamam search box-->
+        <div class="col text-center">
+          <p>Have something a little more specific in mind?</p>
+          <label for="search-input">Search:</label>
+          <input type="search" id="search-input" name="search" placeholder="Search Key Words">
+          <button type="button" class="btn btn-primary" id="search-category-btn">Search</button>
+          <div id="recent-search-container"></div>
+        </div>
+      </section>
+
+      <!--recipe result-->
+      <section class="row">
+        <div class="col-9 text-center">
+          <h2 class="title">Your Recipe Results:</h2>
+        </div>
+        <div class="col-9 text-center">
+          <div id="recipe-result-container" class="row d-flex flex-row align-items-stretch"></div>
+        </div>
+
+        <!--Displays all saved recipes-->
+        <aside class="col-3">
+          <div id="saved-recipe-container"></div>
+        </aside>
+      </section>
     </main>
   </div>
 
