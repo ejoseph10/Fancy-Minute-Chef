@@ -33,7 +33,7 @@
         <div class="col-6 text-center">
           <div class="random-meal-generator">
             <p>Not sure?
-              Let us suggest something using our random meal generator to pick for you!</p>
+              Let us suggest something using our random meal generator!</p>
             <!-- <img src="assets/images/randomrecipe.png" style="max-width:20%;" class="rounded mx-auto d-block"
                 alt="spinner random meal"> -->
             <button type="button" class="btn btn-primary" id="random-meal">Pick my meal!</button>
@@ -44,7 +44,7 @@
       <!--recipe result-->
       <section class="row">
         <div class="col-9 text-center">
-          <h2 class="title">Your Recipe Results:</h2>
+          <h2 id="results-title" class="title" style="display: none">Your Recipe Results:</h2>
         </div>
         <div class="col-9 text-center">
           <div id="recipe-result-container" class="row d-flex flex-row align-items-stretch"></div>
@@ -52,6 +52,7 @@
 
         <!--Displays all saved recipes-->
         <aside class="col-3">
+          <h3 id="saved-recipes-title">Saved Recipes:</h3>
           <div id="saved-recipe-container"></div>
         </aside>
       </section>

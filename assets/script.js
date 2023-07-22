@@ -7,12 +7,15 @@ $(document).ready(function () {
     //Edamam button click event
     $("#search-category-btn").on("click", function (event) {
         event.preventDefault()
-        
         var edamamSearch = $("#search-input").val();
-        
-
         getRecipeEdamam(edamamSearch)
-
+    });
+    $('#search-input').on('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault()
+            var edamamSearch = $(this).val();
+            getRecipeEdamam(edamamSearch)
+        }
     });
 
     //Edamam fetch Api recipe
@@ -21,7 +24,7 @@ $(document).ready(function () {
         const recipes = await response.json();
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
-            if(searchQuery === "" || searchQuery === null || searchQuery === undefined) {
+            if (searchQuery === "" || searchQuery === null || searchQuery === undefined) {
                 if (!currentSearches.includes("Random"))
                     localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
             }
@@ -91,7 +94,13 @@ $(document).ready(function () {
     function displaySavedRecipes() {
         var recipeSavedEl = $("#saved-recipe-container");
         var savedRecipes = getSavedRecipesFromLS();
+        var savedRecipeHeaderEl = $("#saved-recipes-title")
         recipeSavedEl.empty()
+        if (savedRecipes.length > 0) {
+            savedRecipeHeaderEl.show()
+        } else {
+            savedRecipeHeaderEl.hide()
+        }
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
                 <div class="col-xl col-lg col-md col-sm-12 col-xs-12 col-12 card"> 
@@ -114,7 +123,10 @@ $(document).ready(function () {
     //Displays edamam search results
     function displaySearchResultsEdamam(results) {
         var resultContainerEl = $("#recipe-result-container");
+        var searchResultHeaderEl = $("#results-title")
         resultContainerEl.empty()
+
+        searchResultHeaderEl.show()
 
         results.hits.forEach(hit => {
             var recipeEl = $(`
@@ -153,7 +165,11 @@ $(document).ready(function () {
     //Displays MealDB recipe
     function displaySearchResultsMealDB(results) {
         var resultContainerEl = $("#recipe-result-container");
+        var searchResultHeaderEl = $("#results-title")
+
         resultContainerEl.empty()
+
+        searchResultHeaderEl.show()
 
         results.meals.forEach(meal => {
             var recipeEl = $(`
