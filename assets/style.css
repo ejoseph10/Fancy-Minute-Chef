@@ -1,7 +1,7 @@
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-header{
+header, footer{
     background-color: #c15747
 }
 img{
@@ -29,4 +29,12 @@ img{
 .btn-light-red:hover{
     background-color: #E04D4D;
     color:white;
+}
+footer a{
+    text-decoration: none;
+    color: white;
+}
+footer a:hover{
+    text-decoration: none;
+    color: #FFDE59;
 }
