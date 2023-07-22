@@ -104,11 +104,9 @@ $(document).ready(function () {
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12 col-xl-12 col-12 card"> 
-                <img class="card-img-top" width="75px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                <img width="100px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
                 <div class="card-body">
                     <h5 class="card-title">${recipe.labelProp}</h5>
-                    <div>${recipe.tagsProp}</div>
-                    <div>${recipe.typeProp}</div>
                     <a target="_blank" href="${recipe.urlProp}">
                   </div>  
                 </div>`)
@@ -131,10 +129,21 @@ $(document).ready(function () {
         searchResultHeaderEl.show()
 
         results.hits.forEach(hit => {
+            //resizes card header font to take less space if too long
+            var size = hit.recipe.label.length;
+            if (size >= 50)  {
+                size = 6;
+            } else if (size >= 40)  {
+                size = 5;
+            } else if (size >=30) {
+                size = 4;
+            } else {
+                size = 4;
+            }
             var recipeEl = $(`
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card">
                     <div class="card-header">
-                        <h3 class="card-title">${hit.recipe.label}</h3>
+                        <h${size} class="card-title">${hit.recipe.label}</h${size}>
                     </div>
                     <div class="card-body">
                         <div class"card-subtitle text-body-secondary">${hit.recipe.dietLabels}</div>
@@ -180,18 +189,23 @@ $(document).ready(function () {
 
         results.meals.forEach(meal => {
             var recipeEl = $(`
-                <div> 
-                    <h3>${meal.strMeal}</h3>
-                    <div>${meal.strCategory}</div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 col-12 card mx-auto">
+                    <div class="card-header">
+                        <h3 class="card-title">${meal.strMeal}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class"card-subtitle text-body-secondary">${meal.strCategory}</div>
+                    </div>
                     <a target="_blank" href="${meal.strSource}">
-                    <img width="200px" src="${meal.strMealThumb}" alt="some delicious ${meal.strMeal}"></a> 
+                        <img width="200px" src="${meal.strMealThumb}" alt="some delicious ${meal.strMeal}">
+                    </a>
                 </div>`)
-            var recipeSaveButtonEl = $("<button>Save Recipe</button> ")
+            var recipeSaveButtonEl = $("<div class='card-footer'><button class='btn btn-secondary'>Save Recipe</button></div>")
             recipeSaveButtonEl.on("click", function () {
                 saveIndividualRecipe(meal.strMeal, "", meal.strCategory, meal.strSource, meal.strMealThumb)
             })
             resultContainerEl.append(recipeEl)
-            resultContainerEl.append(recipeSaveButtonEl)
+            recipeEl.append(recipeSaveButtonEl)
         })
     }
     displaySavedRecipes()

@@ -11,10 +11,8 @@ img{
     box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.7);
 }
 #recipe-result-container{
-    border-radius: 10px;
     margin:0.5rem;
     overflow: hidden;
-    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.7);
 }
 .btn-light-grey {
     background-color: #e0e0e0; /* Light grey color */
