@@ -104,11 +104,13 @@ $(document).ready(function () {
         savedRecipes.forEach(recipe => {
             var savedRecipeEl = $(`
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12 col-xl-12 col-12 card"> 
-                <img width="100px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
-                <div class="card-body">
-                    <h5 class="card-title">${recipe.labelProp}</h5>
-                    <a target="_blank" href="${recipe.urlProp}">
-                  </div>  
+                    <div class="card-header">
+                        <h6 class="card-title">${recipe.labelProp}</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <a target="_blank" href="${recipe.urlProp}">
+                        <img width="100px" src="${recipe.imageProp}" alt="some delicious ${recipe.labelProp}"></a>
+                    </div>  
                 </div>`)
             var recipeDeleteButtonEl = $("<button class='btn btn-secondary'>Delete Recipe</button> ")
             recipeDeleteButtonEl.on("click", function () {
