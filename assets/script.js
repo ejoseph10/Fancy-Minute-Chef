@@ -10,6 +10,7 @@ $(document).ready(function () {
         var edamamSearch = $("#search-input").val();
         getRecipeEdamam(edamamSearch)
     });
+    //Enter keydown click event
     $('#search-input').on('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault()
@@ -24,15 +25,20 @@ $(document).ready(function () {
         const recipes = await response.json();
         if (recipes) {
             var currentSearches = getRecentSearchesFromLS();
+            // checks if search box is empty and makes a "Random" button as a recent search
             if (searchQuery === "" || searchQuery === null || searchQuery === undefined) {
                 if (!currentSearches.includes("Random"))
                     localStorage.setItem('recentSearches', JSON.stringify(["Random", ...currentSearches]));
             }
+            // if search box is not empty, save search to recent if not already saved
             else if (!currentSearches.includes(searchQuery)) {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches]));
-            } else {
+            } 
+            // If search is already saved, search term is moved to front of list
+            else {
                 localStorage.setItem('recentSearches', JSON.stringify([searchQuery, ...currentSearches.filter(search => search !== searchQuery)]))
             }
+            // If searched items is bigger than 5, kicks out oldest search
             currentSearches = getRecentSearchesFromLS();
             if (currentSearches.length > 5) {
                 localStorage.setItem('recentSearches', JSON.stringify(currentSearches.splice(0, 5)));
@@ -96,6 +102,7 @@ $(document).ready(function () {
         var savedRecipes = getSavedRecipesFromLS();
         var savedRecipeHeaderEl = $("#saved-recipes-title")
         recipeSavedEl.empty()
+        //saved recipe header hide and show 
         if (savedRecipes.length > 0) {
             savedRecipeHeaderEl.show()
         } else {
@@ -127,7 +134,7 @@ $(document).ready(function () {
         var resultContainerEl = $("#recipe-result-container");
         var searchResultHeaderEl = $("#results-title")
         resultContainerEl.empty()
-
+        //recipe results show and hide
         searchResultHeaderEl.show()
 
         results.hits.forEach(hit => {
@@ -135,10 +142,8 @@ $(document).ready(function () {
             var size = hit.recipe.label.length;
             if (size >= 50)  {
                 size = 6;
-            } else if (size >= 40)  {
-                size = 5;
             } else if (size >=30) {
-                size = 4;
+                size = 5;
             } else {
                 size = 4;
             }
@@ -186,7 +191,7 @@ $(document).ready(function () {
         var searchResultHeaderEl = $("#results-title")
 
         resultContainerEl.empty()
-
+        //recipe results show and hide
         searchResultHeaderEl.show()
 
         results.meals.forEach(meal => {
